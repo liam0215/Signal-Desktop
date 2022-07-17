@@ -15,7 +15,7 @@ export const GOT_SOCKET_TIMEOUT = durations.MINUTE;
 const GOT_RETRY_LIMIT = 3;
 
 export function getProxyUrl(): string | undefined {
-  return process.env.HTTPS_PROXY || process.env.https_proxy;
+  return config.get('proxyUrl') || process.env.HTTPS_PROXY || process.env.https_proxy;
 }
 
 export function getCertificateAuthority(): string {
@@ -27,9 +27,9 @@ export function getGotOptions(): GotOptions {
   const proxyUrl = getProxyUrl();
   const agent = proxyUrl
     ? {
-        http: new ProxyAgent(proxyUrl),
-        https: new ProxyAgent(proxyUrl),
-      }
+      http: new ProxyAgent(proxyUrl),
+      https: new ProxyAgent(proxyUrl),
+    }
     : undefined;
 
   return {

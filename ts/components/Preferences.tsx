@@ -24,6 +24,7 @@ import type {
   DefaultConversationColorType,
 } from '../types/Colors';
 import { DisappearingTimeDialog } from './DisappearingTimeDialog';
+import { Input } from './Input';
 import type { LocalizerType, ThemeType } from '../types/Util';
 import { PhoneNumberDiscoverability } from '../util/phoneNumberDiscoverability';
 import { PhoneNumberSharingMode } from '../util/phoneNumberSharingMode';
@@ -604,17 +605,17 @@ export const Preferences = ({
                   options={
                     availableCameras.length
                       ? availableCameras.map(device => ({
-                          text: localizeDefault(i18n, device.label),
-                          value: device.deviceId,
-                        }))
+                        text: localizeDefault(i18n, device.label),
+                        value: device.deviceId,
+                      }))
                       : [
-                          {
-                            text: i18n(
-                              'callingDeviceSelection__select--no-device'
-                            ),
-                            value: 'undefined',
-                          },
-                        ]
+                        {
+                          text: i18n(
+                            'callingDeviceSelection__select--no-device'
+                          ),
+                          value: 'undefined',
+                        },
+                      ]
                   }
                   value={selectedCamera}
                 />
@@ -640,17 +641,17 @@ export const Preferences = ({
                   options={
                     availableMicrophones.length
                       ? availableMicrophones.map(device => ({
-                          text: localizeDefault(i18n, device.name),
-                          value: device.index,
-                        }))
+                        text: localizeDefault(i18n, device.name),
+                        value: device.index,
+                      }))
                       : [
-                          {
-                            text: i18n(
-                              'callingDeviceSelection__select--no-device'
-                            ),
-                            value: 'undefined',
-                          },
-                        ]
+                        {
+                          text: i18n(
+                            'callingDeviceSelection__select--no-device'
+                          ),
+                          value: 'undefined',
+                        },
+                      ]
                   }
                   value={selectedMicrophone?.index}
                 />
@@ -678,17 +679,17 @@ export const Preferences = ({
                   options={
                     availableSpeakers.length
                       ? availableSpeakers.map(device => ({
-                          text: localizeDefault(i18n, device.name),
-                          value: device.index,
-                        }))
+                        text: localizeDefault(i18n, device.name),
+                        value: device.index,
+                      }))
                       : [
-                          {
-                            text: i18n(
-                              'callingDeviceSelection__select--no-device'
-                            ),
-                            value: 'undefined',
-                          },
-                        ]
+                        {
+                          text: i18n(
+                            'callingDeviceSelection__select--no-device'
+                          ),
+                          value: 'undefined',
+                        },
+                      ]
                   }
                   value={selectedSpeaker?.index}
                 />
@@ -804,11 +805,11 @@ export const Preferences = ({
             right={
               blockedCount === 1
                 ? i18n('Preferences--blocked-count-singular', [
-                    String(blockedCount),
-                  ])
+                  String(blockedCount),
+                ])
                 : i18n('Preferences--blocked-count-plural', [
-                    String(blockedCount || 0),
-                  ])
+                  String(blockedCount || 0),
+                ])
             }
           />
         </SettingsRow>
@@ -945,6 +946,24 @@ export const Preferences = ({
                 value={universalExpireTimer}
               />
             }
+          />
+        </SettingsRow>
+        <SettingsRow title={'Proxy Settings'}>
+          <Checkbox
+            checked={hasReadReceipts}
+            label={'Enable Proxy'}
+            moduleClassName="Preferences__checkbox"
+            name="enableProxy"
+            onChange={noop}
+          />
+          <Input
+            disableSpellcheck={true}
+            expandable={false}
+            hasClearButton={false}
+            i18n={i18n}
+            onChange={noop}
+            onEnter={noop}
+            placeholder={'Proxy URL'}
           />
         </SettingsRow>
         <SettingsRow>
@@ -1155,8 +1174,8 @@ const Control = ({
 function localizeDefault(i18n: LocalizerType, deviceLabel: string): string {
   return deviceLabel.toLowerCase().startsWith('default')
     ? deviceLabel.replace(
-        /default/i,
-        i18n('callingDeviceSelection__select--default')
-      )
+      /default/i,
+      i18n('callingDeviceSelection__select--default')
+    )
     : deviceLabel;
 }

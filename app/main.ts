@@ -416,7 +416,7 @@ async function prepareUrl(
     nodeVersion: process.versions.node,
     hostname: os.hostname(),
     appInstance: process.env.NODE_APP_INSTANCE || undefined,
-    proxyUrl: process.env.HTTPS_PROXY || process.env.https_proxy || undefined,
+    proxyUrl: config.get<string>('proxyUrl') || process.env.HTTPS_PROXY || process.env.https_proxy || undefined,
     contentProxyUrl: config.get<string>('contentProxyUrl'),
     sfuUrl: config.get('sfuUrl'),
     reducedMotionSetting: animationSettings.prefersReducedMotion,
@@ -942,7 +942,7 @@ ipc.on('title-bar-double-click', () => {
 
   if (OS.isMacOS()) {
     switch (
-      systemPreferences.getUserDefault('AppleActionOnDoubleClick', 'string')
+    systemPreferences.getUserDefault('AppleActionOnDoubleClick', 'string')
     ) {
       case 'Minimize':
         mainWindow.minimize();
@@ -1300,8 +1300,8 @@ async function showStickerCreator() {
 
   const appUrl = process.env.SIGNAL_ENABLE_HTTP
     ? prepareUrl(
-        new URL('http://localhost:6380/sticker-creator/dist/index.html')
-      )
+      new URL('http://localhost:6380/sticker-creator/dist/index.html')
+    )
     : prepareFileUrl([__dirname, '../sticker-creator/dist/index.html']);
 
   stickerCreatorWindow.loadURL(await appUrl);
@@ -1453,7 +1453,7 @@ const runSQLCorruptionHandler = async () => {
 
   getLogger().error(
     'Detected sql corruption in main process. ' +
-      `Restarting the application immediately. Error: ${error.message}`
+    `Restarting the application immediately. Error: ${error.message}`
   );
 
   await onDatabaseError(error.stack || error.message);
@@ -2253,10 +2253,10 @@ async function ensureFilePermissions(onlyFiles?: Array<string>) {
   const files = onlyFiles
     ? onlyFiles.map(f => join(userDataPath, f))
     : await fastGlob(userDataGlob, {
-        markDirectories: true,
-        onlyFiles: false,
-        ignore: ['**/Singleton*'],
-      });
+      markDirectories: true,
+      onlyFiles: false,
+      ignore: ['**/Singleton*'],
+    });
 
   getLogger().info(`Ensuring file permissions for ${files.length} files`);
 
